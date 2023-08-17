@@ -1,0 +1,59 @@
+kind: pipeline
+type: docker
+name: ci/cd
+clone:
+  disable: true
+
+steps:
+  - name: clone
+    image: alpine/git
+    environment:
+      SSH_KEY:
+        from_secret: ssh_key
+    commands:
+      - mkdir $HOME/.ssh
+      - echo -n "$SSH_KEY" > $HOME/.ssh/id_rsa
+      - chmod 600 /root/.ssh/id_rsa
+
+      - touch /root/.ssh/known_hosts
+      - chmod 600 /root/.ssh/known_hosts
+      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
+
+      - git init
+      - git remote add origin $DRONE_GIT_SSH_URL
+      - git fetch --no-tags --prune --progress --no-recurse-submodules --depth=1
+      - git checkout origin/$DRONE_COMMIT_BRANCH -ft
+  - name: build
+    image: registry.cn-shanghai.aliyuncs.com/zzf2001/pnpm
+    depends_on: [clone]
+    commands:
+      - pnpm install
+      - pnpm run build
+  - name: oss
+    image: registry.cn-shanghai.aliyuncs.com/zzf2001/drone-aliyun-oss
+    depends_on: [build]
+    settings:
+      endpoint:
+        from_secret: endpoint
+      ACCESS_KEY_ID:
+        from_secret: accessKeyID
+      ACCESS_KEY_SECRET:
+        from_secret: accessKeySecret
+      BUCKET_NAME:
+        from_secret: bucketName
+      target: zeus
+      source: ./dist
+  - name: deploy
+    image: appleboy/drone-scp
+    depends_on: [build]
+    settings:
+      host:
+        from_secret: caddy_host
+      port: 22
+      username:
+        from_secret: caddy_username
+      key:
+        from_secret: caddy_ssh_key
+      target: /etc/caddy/rtc.zzfzzf.com
+      source: ./dist
+
