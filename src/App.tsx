@@ -81,28 +81,25 @@ function App() {
     const _pc = new RTCPeerConnection({
       iceServers: [
         {
-          urls: "stun:stun.relay.metered.ca:80",
-        },
-        {
           urls: "turn:a.relay.metered.ca:80",
           username: "930efe43228b1175f719e452",
           credential: "2nkrX+MuhVP2svcp",
         },
-        {
-          urls: "turn:a.relay.metered.ca:80?transport=tcp",
-          username: "930efe43228b1175f719e452",
-          credential: "2nkrX+MuhVP2svcp",
-        },
-        {
-          urls: "turn:a.relay.metered.ca:443",
-          username: "930efe43228b1175f719e452",
-          credential: "2nkrX+MuhVP2svcp",
-        },
-        {
-          urls: "turn:a.relay.metered.ca:443?transport=tcp",
-          username: "930efe43228b1175f719e452",
-          credential: "2nkrX+MuhVP2svcp",
-        },
+        // {
+        //   urls: "turn:a.relay.metered.ca:80?transport=tcp",
+        //   username: "930efe43228b1175f719e452",
+        //   credential: "2nkrX+MuhVP2svcp",
+        // },
+        // {
+        //   urls: "turn:a.relay.metered.ca:443",
+        //   username: "930efe43228b1175f719e452",
+        //   credential: "2nkrX+MuhVP2svcp",
+        // },
+        // {
+        //   urls: "turn:a.relay.metered.ca:443?transport=tcp",
+        //   username: "930efe43228b1175f719e452",
+        //   credential: "2nkrX+MuhVP2svcp",
+        // },
       ],
     })
     _pc.onicecandidate = e => {
