@@ -82,6 +82,13 @@ function App() {
       iceServers: [
         {
           urls: ['stun:stun.zzfzzf.com:3478'],
+          username: 'rtc',
+          credential: 'rtc',
+        },
+        {
+          urls: ['turn:turn.zzfzzf.com:3478'],
+          username: 'rtc',
+          credential: 'rtc',
         }
       ]
     })
