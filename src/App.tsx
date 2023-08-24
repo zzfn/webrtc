@@ -70,7 +70,7 @@ function App() {
   const getMediaDevices = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
-      audio: false,
+      audio: true,
     })
     console.log('stream', stream)
     localVideoRef.current!.srcObject = stream
@@ -81,7 +81,7 @@ function App() {
     const _pc = new RTCPeerConnection({
       iceServers: [
         {
-          urls: ['stun:stun.stunprotocol.org:3478'],
+          urls: ['stun:stun.zzfzzf.com:3478'],
         }
       ]
     })
