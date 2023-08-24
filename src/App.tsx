@@ -161,10 +161,10 @@ function App() {
       <p>{`当前状态：${status}`}</p>
       <br />
       {status === '开始通话' && (
-        <button onClick={createOffer}>拨号</button>
+        <button onClick={createOffer}>拨号1</button>
       )}
       {status === '请接听通话' && (
-        <button onClick={createAnswer}>接听</button>
+        <button onClick={createAnswer}>接听1</button>
       )}
     </div>
   )
