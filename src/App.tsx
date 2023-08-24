@@ -81,15 +81,15 @@ function App() {
     const _pc = new RTCPeerConnection({
       iceServers: [
         {
-          urls: ['stun:stun.zzfzzf.com:3478'],
+          urls: ['turn:turn.zzfzzf.com:3478'],
           username: 'rtc',
           credential: 'rtc',
         },
         {
-          urls: ['turn:turn.zzfzzf.com:3478'],
+          urls: ['stun:stun.zzfzzf.com:3478'],
           username: 'rtc',
           credential: 'rtc',
-        }
+        },
       ]
     })
     _pc.onicecandidate = e => {
